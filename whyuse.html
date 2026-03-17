@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why LimeTree? | Technical Advantages</title>
+    <style>
+        :root { --lime: #86cf3d; --dark: #121212; --card: #1e1e1e; --text: #cccccc; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--dark); color: white; margin: 0; line-height: 1.6; }
+        nav { padding: 20px; border-bottom: 1px solid #333; display: flex; justify-content: center; gap: 30px; background: #000; }
+        nav a { color: #888; text-decoration: none; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
+        nav a:hover { color: var(--lime); }
+        .active { color: var(--lime); border-bottom: 1px solid var(--lime); }
+        
+        .container { max-width: 900px; margin: 60px auto; padding: 0 20px; }
+        h1 { font-size: 2.5rem; color: var(--lime); margin-bottom: 10px; }
+        .subtitle { color: var(--text); font-size: 1.1rem; margin-bottom: 40px; border-bottom: 1px solid #333; padding-bottom: 20px; }
+        
+        .section { margin-bottom: 50px; }
+        h2 { font-size: 1.5rem; color: white; margin-bottom: 15px; }
+        p { color: var(--text); margin-bottom: 20px; }
+        
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 30px; }
+        .feature-box { background: var(--card); padding: 25px; border-radius: 4px; border: 1px solid #333; }
+        .feature-box h3 { margin-top: 0; color: var(--lime); font-size: 1.2rem; }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="whyuse.html" class="active">Why LimeTree?</a>
+        <a href="learn.html">Learn</a>
+        <a href="player.html">Player</a>
+    </nav>
+
+    <div class="container">
+        <h1>Why Use LimeTree?</h1>
+        <p class="subtitle">A technical breakdown of the engine's philosophy and performance benefits.</p>
+
+        <div class="grid">
+            <div class="feature-box">
+                <h3>Zero Compilation</h3>
+                <p>Unlike traditional engines, LimeTree interprets project structures in real-time. No build pipelines or SDKs required.</p>
+            </div>
+            <div class="feature-box">
+                <h3>FileSystem Agnostic</h3>
+                <p>By utilizing ZIP archives, the engine treats compressed data as a virtual directory, ensuring 100% portability.</p>
+            </div>
+            <div class="feature-box">
+                <h3>Native Performance</h3>
+                <p>Built on vanilla JavaScript with minimal dependencies, ensuring fast execution on both high-end and low-end hardware.</p>
+            </div>
+            <div class="feature-box">
+                <h3>Modular Architecture</h3>
+                <p>Portals and scripts are isolated. Updating one part of the game does not affect the integrity of other modules.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
