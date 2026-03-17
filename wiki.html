@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technical Wiki | LimeTree Engine Full Documentation</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    <style>
+        :root { 
+            --lime: #86cf3d; 
+            --dark: #0a0a0a; 
+            --sidebar: #111111; 
+            --text: #b3b3b3; 
+            --code: #000000;
+            --border: #222222;
+        }
+
+        body { 
+            font-family: 'Inter', 'Segoe UI', sans-serif; 
+            background: var(--dark); 
+            color: white; 
+            margin: 0; 
+            display: flex; 
+            flex-direction: column; 
+            height: 100vh; 
+            overflow: hidden; 
+        }
+
+        /* Navigation Bar */
+        nav { 
+            padding: 15px 40px; 
+            border-bottom: 1px solid var(--border); 
+            display: flex; 
+            justify-content: center; 
+            gap: 40px; 
+            background: #000; 
+            z-index: 1000;
+        }
+        nav a { 
+            color: #666; 
+            text-decoration: none; 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
+            transition: 0.3s;
+        }
+        nav a:hover, nav a.active { color: var(--lime); }
+
+        .wiki-layout { display: flex; flex: 1; overflow: hidden; }
+
+        /* Sidebar Architecture */
+        .sidebar { 
+            width: 300px; 
+            background: var(--sidebar); 
+            border-right: 1px solid var(--border); 
+            padding: 40px 30px; 
+            overflow-y: auto; 
+        }
+        .sidebar h4 { 
+            color: #fff; 
+            font-size: 0.7rem; 
+            text-transform: uppercase; 
+            letter-spacing: 2.5px; 
+            margin: 35px 0 15px 0; 
+            opacity: 0.4; 
+        }
+        .sidebar ul { list-style: none; padding: 0; margin: 0; }
+        .sidebar li { margin-bottom: 12px; }
+        .sidebar a { 
+            color: var(--text); 
+            text-decoration: none; 
+            font-size: 0.9rem; 
+            transition: 0.2s; 
+            display: block; 
+        }
+        .sidebar a:hover { color: var(--lime); transform: translateX(5px); }
+
+        /* Main Content Body */
+        .content { 
+            flex: 1; 
+            padding: 80px 100px; 
+            overflow-y: auto; 
+            scroll-behavior: smooth; 
+            line-height: 1.8;
+        }
+        section { margin-bottom: 150px; }
+        
+        h1 { font-size: 4rem; color: var(--lime); margin: 0 0 30px 0; letter-spacing: -2px; }
+        h2 { font-size: 2.2rem; border-bottom: 1px solid var(--border); padding-bottom: 20px; margin-bottom: 40px; color: #fff; }
+        h3 { font-size: 1.4rem; color: var(--lime); margin-top: 40px; }
+        
+        p { margin-bottom: 25px; font-size: 1.1rem; }
+        ul li { margin-bottom: 10px; }
+        
+        /* Specialized Code Blocks */
+        code { background: var(--code); color: var(--lime); padding: 4px 10px; border-radius: 4px; font-family: 'Fira Code', monospace; }
+        pre { 
+            background: var(--code); 
+            padding: 30px; 
+            border-radius: 12px; 
+            border: 1px solid var(--border); 
+            overflow-x: auto; 
+            color: #dcdcdc; 
+            line-height: 1.6; 
+            margin: 30px 0;
+            font-size: 0.95rem;
+        }
+
+        /* Documentation UI Elements */
+        .info-card { 
+            background: #111; 
+            border: 1px solid var(--border); 
+            border-left: 6px solid var(--lime); 
+            padding: 30px; 
+            margin: 40px 0; 
+            border-radius: 4px; 
+        }
+        .warning-card { border-left-color: #ff4444; background: rgba(255, 68, 68, 0.05); }
+
+        table { width: 100%; border-collapse: collapse; margin: 40px 0; }
+        table th, table td { border: 1px solid var(--border); padding: 18px; text-align: left; }
+        table th { background: #151515; color: var(--lime); text-transform: uppercase; font-size: 0.8rem; }
+
+        footer { margin-top: 100px; padding-top: 40px; border-top: 1px solid var(--border); color: #444; font-size: 0.8rem; text-align: center; }
+
+        /* Responsive Design */
+        @media (max-width: 1000px) {
+            .sidebar { display: none; }
+            .content { padding: 40px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="index.html">Home</a>
+    <a href="whyuse.html">Why LimeTree?</a>
+    <a href="learn.html">Learn</a>
+    <a href="wiki.html" class="active">Wiki Documentation</a>
+    <a href="player.html">Player</a>
+</nav>
+
+<div class="wiki-layout">
+    <aside class="sidebar">
+        <h4>01 Overview</h4>
+        <ul>
+            <li><a href="#welcome">Introduction</a></li>
+            <li><a href="#manifesto">The Manifesto</a></li>
+            <li><a href="#licensing">Open Source Standards</a></li>
+        </ul>
+        
+        <h4>02 Infrastructure</h4>
+        <ul>
+            <li><a href="#parsing">The Parser Core</a></li>
+            <li><a href="#memory">Memory Management</a></li>
+            <li><a href="#asynchronous">Async ZIP Protocol</a></li>
+            <li><a href="#vfs">Virtual File System</a></li>
+        </ul>
+
+        <h4>03 Scripting Language</h4>
+        <ul>
+            <li><a href="#declarative">Declarative Logic</a></li>
+            <li><a href="#label-system">The Label Engine</a></li>
+            <li><a href="#button-objects">Button Constructors</a></li>
+            <li><a href="#state-management">Game State Persistance</a></li>
+        </ul>
+
+        <h4>04 Portal Logic</h4>
+        <ul>
+            <li><a href="#portal-creation">Portal Directory Rules</a></li>
+            <li><a href="#navigation">Inter-Portal Navigation</a></li>
+            <li><a href="#exit-sequence">Termination Logic</a></li>
+        </ul>
+
+        <h4>05 Styling & UI</h4>
+        <ul>
+            <li><a href="#theming">Custom Themes</a></li>
+            <li><a href="#css-override">CSS Injection</a></li>
+            <li><a href="#animations">Transition Hooks</a></li>
+        </ul>
+
+        <h4>06 Debugging</h4>
+        <ul>
+            <li><a href="#console">Engine Console</a></li>
+            <li><a href="#error-codes">Error Code Index</a></li>
+            <li><a href="#validation">ZIP Validation</a></li>
+        </ul>
+    </aside>
+
+    <main class="content">
+        <section id="welcome">
+            <h1>Documentation</h1>
+            <p>This is the comprehensive technical reference for the LimeTree Adventure Engine. LimeTree is built for speed, portability, and ease of use, bridging the gap between raw text files and interactive experiences.</p>
+            <div class="info-card">
+                <strong>Project Status:</strong> v1.0 Production Ready. <br>
+                LimeTree is a self-contained ecosystem. No external database or server logic is required to run a full-scale adventure.
+            </div>
+        </section>
+
+        <section id="#manifesto">
+            <h2>The Manifesto</h2>
+            <p>In an era of bloated game engines, LimeTree stands for radical simplicity. Our engine architecture is based on the following non-negotiable pillars:</p>
+            <ul>
+                <li><strong>Human Readable:</strong> Game logic should be understandable without a computer science degree.</li>
+                <li><strong>Zero Installation:</strong> The player is a single HTML file. The game is a single ZIP.</li>
+                <li><strong>Privacy First:</strong> No tracking, no cookies, no cloud. Everything happens on the user's machine.</li>
+            </ul>
+        </section>
+
+        <section id="parsing">
+            <h2>The Parser Core</h2>
+            <p>The core of LimeTree is an interpretative layer written in vanilla JavaScript. It does not compile; it reads. This allows for rapid prototyping where changes in the text file are reflected instantly upon reloading the ZIP.</p>
+            <h3>Execution Order</h3>
+            <pre>
+1. ZIP Header Validation
+2. Extraction of @start/!a.txt
+3. Sanitation of Script Strings
+4. Injection into DOM Elements
+5. Event Listener Assignment for Buttons</pre>
+        </section>
+
+        <section id="vfs">
+            <h2>Virtual File System (VFS)</h2>
+            <p>LimeTree creates a temporary Virtual File System in the browser's memory. This is why you can reference images and scripts within the ZIP without hosting them on a server.</p>
+            <div class="info-card warning-card">
+                <strong>Memory Constraint:</strong> Since the VFS resides in RAM, keeping your ZIP files under 50MB is recommended for mobile compatibility.
+            </div>
+        </section>
+
+        <section id="declarative">
+            <h2>Declarative Logic Syntax</h2>
+            <p>The scripting within <code>!a.txt</code> is designed to be declarative. You define "what it is" rather than "how it happens."</p>
+            <pre>
+// Global Scope Definition
+self.label = "You are in the engine core.";
+self.button1.text = "Initialize System";
+self.button1.portal = portals.init_sequence;
+
+// Optional: System Feedback
+console.log("Portal Loaded Successfully.");</pre>
+        </section>
+
+        <section id="portal-creation">
+            <h2>Portal Directory Rules</h2>
+            <p>Portals are the "rooms" of your game. Each portal must follow the standard directory structure to be recognized by the VFS.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Naming Convention</th>
+                        <th>Required</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>@start</code></td>
+                        <td>YES</td>
+                        <td>The initial entry point of every LimeTree game.</td>
+                    </tr>
+                    <tr>
+                        <td><code>!a.txt</code></td>
+                        <td>YES</td>
+                        <td>The logic file containing self.label and self.button assignments.</td>
+                    </tr>
+                    <tr>
+                        <td><code>image.jpg</code></td>
+                        <td>NO</td>
+                        <td>Asset reference for visual portals (future support).</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="exit-sequence">
+            <h2>Termination Logic</h2>
+            <p>The <code>exitFromTheTree()</code> function is a specialized native method. When called, it performs a secure wipe of the virtual memory and returns the DOM to its initial "Ready for Input" state.</p>
+            <h3>Usage Scenario</h3>
+            <pre>
+// Use this for "Game Over" or "The End" portals
+self.label = "The journey has concluded.";
+self.button4.text = "Back to Menu";
+self.button4.portal = exitFromTheTree();</pre>
+        </section>
+
+        <section id="error-codes">
+            <h2>Error Code Index</h2>
+            <p>If the engine encounters a problem, it will display a specific error code. Refer to the table below for solutions.</p>
+            <ul>
+                <li><code>ERR_NO_START:</code> Folder @start not found in ZIP root.</li>
+                <li><code>ERR_LOGIC_NULL:</code> !a.txt exists but contains no valid commands.</li>
+                <li><code>ERR_VFS_CORRUPT:</code> The ZIP file is corrupted or protected by a password.</li>
+                <li><code>ERR_PORTAL_LOOP:</code> A portal attempts to call itself without a trigger.</li>
+            </ul>
+        </section>
+
+        <footer>
+            Built with LimeTree Engine Architecture. <br>
+            &copy; 2026 canuxs. All rights reserved. Professional Documentation v1.0.4
+        </footer>
+    </main>
+</div>
+
+</body>
+</html>
