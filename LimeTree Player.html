@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Limetree Player</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <style>
+        body { background: #e7ed4b; color: #074407; font-family: monospace; padding: 40px; }
+        button { display: block; width: 100%; padding: 15px; margin: 10px 0; background: #074407; color: #e7ed4b; border: none; cursor: pointer; font-size: 18px; }
+        button:hover { background: #1a661a; }
+    </style>
+</head>
+<body>
+    <h1>Limetree Player</h1>
+    <input type="file" id="upload" accept=".zip">
+    <button onclick="baslat()">Start Game</button>
+    <div id="game-ui" style="margin-top:20px;"></div>
+
+    <script>
+        let dosyalar = {};
+
+        async function baslat() {
+            const file = document.getElementById('upload').files[0];
+            if (!file) return alert("Please select a ZIP file!");
+            const zip = await JSZip.loadAsync(file);
+            
+            for (let path in zip.files) {
+                if (path.includes("!")) {
+                    const content = await zip.files[path].async("string");
+                    let key = path.split('/').slice(-2, -1)[0].replace('portal.', '').replace('@', '').trim();
+                    dosyalar[key] = content;
+                }
+            }
+            if (dosyalar['start']) render('start');
+            else alert("Start point not found! Available keys: " + Object.keys(dosyalar));
+        }
+
+        function render(key) {
+            const content = dosyalar[key];
+            const ui = document.getElementById('game-ui');
+            ui.innerHTML = `<h2>${content.match(/self\.label\s*===\s*"(.*)"/)?.[1] || "Game"}</h2>`;
+            
+            const lines = content.split('\n');
+            let buttons = [];
+
+            for (let i = 0; i < lines.length; i++) {
+                if (lines[i].includes('.text ===')) {
+                    let text = lines[i].match(/"(.*)"/)[1];
+                    let portal = "";
+                    for(let j = i - 1; j >= 0; j--) {
+                         if(lines[j].includes('.portal ===')) {
+                             portal = lines[j].match(/portal\s*===\s*(.*)/)[1].replace('portals.', '').trim();
+                             break; 
+                         }
+                    }
+                    buttons.push({ text, portal });
+                }
+            }
+
+            buttons.forEach(btn => {
+                const b = document.createElement("button");
+                b.innerText = btn.text;
+                b.onclick = () => {
+                    if (btn.portal.includes('exitFromTheTree')) {
+                        ui.innerHTML = "<h1>Game Over</h1>";
+                    } else if (dosyalar[btn.portal]) {
+                        render(btn.portal);
+                    } else {
+                        alert("Portal not found: " + btn.portal);
+                    }
+                };
+                ui.appendChild(b);
+            });
+        }
+    </script>
+</body>
+</html>
