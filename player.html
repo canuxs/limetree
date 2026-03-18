@@ -1,78 +1,169 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="icon" type="image/png" href="logo.png">
     <meta charset="UTF-8">
-    <title>Limetree Player</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Releases | LimeTree CLI</title>
     <style>
-        body { background: #e7ed4b; color: #074407; font-family: monospace; padding: 40px; }
-        button { display: block; width: 100%; padding: 15px; margin: 10px 0; background: #074407; color: #e7ed4b; border: none; cursor: pointer; font-size: 18px; }
-        button:hover { background: #1a661a; }
+        :root {
+            --render-purple: #4d3df7;
+            --render-bg: #f9f9fb;
+            --render-card: #ffffff;
+            --render-text: #1a1a1a;
+            --render-secondary: #6b7280;
+            --render-border: #e5e7eb;
+            --render-success: #00c853;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background-color: var(--render-bg);
+            color: var(--render-text);
+            margin: 0;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .release-card {
+            background: var(--render-card);
+            border: 1px solid var(--render-border);
+            border-radius: 12px;
+            padding: 32px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .release-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .version-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .version-number {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--render-purple);
+        }
+
+        .status-badge {
+            background-color: #e8f5e9;
+            color: var(--render-success);
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .date-label {
+            color: var(--render-secondary);
+            font-size: 14px;
+        }
+
+        .section-title {
+            font-size: 15px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--render-secondary);
+            margin: 24px 0 12px;
+        }
+
+        .changelog {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .changelog li {
+            padding: 8px 0;
+            border-bottom: 1px solid var(--render-border);
+            font-size: 15px;
+        }
+
+        .changelog li:last-child {
+            border-bottom: none;
+        }
+
+        .command-box {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            padding: 16px;
+            border-radius: 8px;
+            font-family: 'Fira Code', monospace;
+            font-size: 14px;
+            position: relative;
+            margin-top: 12px;
+        }
+
+        .command-box::before {
+            content: "$";
+            color: var(--render-purple);
+            margin-right: 10px;
+        }
+
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            color: var(--render-secondary);
+            font-size: 13px;
+        }
     </style>
 </head>
 <body>
-    <h1>Limetree Player</h1>
-    <input type="file" id="upload" accept=".zip">
-    <button onclick="baslat()">Start Game</button>
-    <div id="game-ui" style="margin-top:20px;"></div>
 
-    <script>
-        let dosyalar = {};
+<div class="container">
+    <div class="header">
+        <h1>Releases</h1>
+    </div>
 
-        async function baslat() {
-            const file = document.getElementById('upload').files[0];
-            if (!file) return alert("Please select a ZIP file!");
-            const zip = await JSZip.loadAsync(file);
-            
-            for (let path in zip.files) {
-                if (path.includes("!")) {
-                    const content = await zip.files[path].async("string");
-                    let key = path.split('/').slice(-2, -1)[0].replace('portal.', '').replace('@', '').trim();
-                    dosyalar[key] = content;
-                }
-            }
-            if (dosyalar['start']) render('start');
-            else alert("Start point not found! Available keys: " + Object.keys(dosyalar));
-        }
+    <div class="release-card">
+        <div class="release-top">
+            <div class="version-info">
+                <span class="version-number">v1.0.0</span>
+                <span class="status-badge">Active</span>
+            </div>
+            <span class="date-label">Released on Mar 18, 2026</span>
+        </div>
 
-        function render(key) {
-            const content = dosyalar[key];
-            const ui = document.getElementById('game-ui');
-            ui.innerHTML = `<h2>${content.match(/self\.label\s*===\s*"(.*)"/)?.[1] || "Game"}</h2>`;
-            
-            const lines = content.split('\n');
-            let buttons = [];
+        <div class="section-title">Change Log</div>
+        <ul class="changelog">
+            <li>Initial stable deployment of LimeTree CLI engine.</li>
+            <li>Optimized ZIP archive processing for <code>Build</code> directory structures.</li>
+            <li>Interactive terminal navigation via <code>lib/engine.js</code>.</li>
+            <li>New <code>limetree open</code> command for seamless game launching.</li>
+        </ul>
 
-            for (let i = 0; i < lines.length; i++) {
-                if (lines[i].includes('.text ===')) {
-                    let text = lines[i].match(/"(.*)"/)[1];
-                    let portal = "";
-                    for(let j = i - 1; j >= 0; j--) {
-                         if(lines[j].includes('.portal ===')) {
-                             portal = lines[j].match(/portal\s*===\s*(.*)/)[1].replace('portals.', '').trim();
-                             break; 
-                         }
-                    }
-                    buttons.push({ text, portal });
-                }
-            }
+        <div class="section-title">Quick Install</div>
+        <div class="command-box">
+            npm install -g limetree-engine
+        </div>
+    </div>
 
-            buttons.forEach(btn => {
-                const b = document.createElement("button");
-                b.innerText = btn.text;
-                b.onclick = () => {
-                    if (btn.portal.includes('exitFromTheTree')) {
-                        ui.innerHTML = "<h1>Game Over</h1>";
-                    } else if (dosyalar[btn.portal]) {
-                        render(btn.portal);
-                    } else {
-                        alert("Portal not found: " + btn.portal);
-                    }
-                };
-                ui.appendChild(b);
-            });
-        }
-    </script>
+    <div class="footer">
+        &copy; 2026 LimeTree Ecosystem. Maintained by @canuxs.
+    </div>
+</div>
+
 </body>
 </html>
