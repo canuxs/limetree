@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forum | LimeTree Community</title>
+    <style>
+        :root { --lime: #86cf3d; --dark-bg: #0a0a0a; --card-bg: #151515; --text: #b3b3b3; --border: #222; }
+        body { font-family: 'Inter', sans-serif; background: var(--dark-bg); color: white; margin: 0; }
+        
+        nav { padding: 15px 40px; border-bottom: 1px solid var(--border); display: flex; justify-content: center; gap: 30px; background: #000; }
+        nav a { color: #666; text-decoration: none; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; }
+        nav a:hover, nav a.active { color: var(--lime); }
+
+        .container { max-width: 1000px; margin: 50px auto; padding: 0 20px; }
+        .forum-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
+        
+        .new-post-btn { background: var(--lime); color: black; padding: 10px 20px; border-radius: 5px; border: none; cursor: pointer; font-weight: bold; }
+
+        /* Forum Konuları */
+        .topic-list { display: flex; flex-direction: column; gap: 15px; }
+        .topic-card { background: var(--card-bg); border: 1px solid var(--border); padding: 20px; border-radius: 8px; }
+        .topic-card h3 { margin: 0 0 5px 0; color: var(--lime); }
+        .topic-card p { margin: 0; color: var(--text); }
+
+        /* Modal */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); justify-content: center; align-items: center; }
+        .modal-content { background: var(--card-bg); padding: 30px; border-radius: 12px; width: 400px; }
+        input, textarea { width: 100%; background: #000; border: 1px solid var(--border); padding: 10px; color: white; margin-bottom: 15px; box-sizing: border-box; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="index.html">Home</a>
+    <a href="wiki.html">Wiki</a>
+    <a href="forum.html" class="active">Forum</a>
+    <a href="player.html">Player</a>
+</nav>
+
+<div class="container">
+    <div class="forum-header">
+        <h1>Community Forum</h1>
+        <button class="new-post-btn" onclick="openModal()">+ New Topic</button>
+    </div>
+
+    <div id="topicList" class="topic-list">
+        </div>
+</div>
+
+<div id="postModal" class="modal">
+    <div class="modal-content">
+        <h2>Create New Topic</h2>
+        <input type="text" id="postTitle" placeholder="Topic Title">
+        <textarea id="postContent" placeholder="Your message..."></textarea>
+        <button class="new-post-btn" onclick="submitPost()">Post Topic</button>
+        <button onclick="closeModal()" style="background:none; color:white; border:none; cursor:pointer;">Cancel</button>
+    </div>
+</div>
+
+<script>
+    // 1. Sayfa açıldığında mesajları sunucudan çek
+    async function loadPosts() {
+        const response = await fetch('/api/posts');
+        const posts = await response.json();
+        const list = document.getElementById('topicList');
+        list.innerHTML = ''; 
+
+        posts.reverse().forEach(post => {
+            list.innerHTML += `
+                <div class="topic-card">
+                    <h3>${post.title}</h3>
+                    <p>${post.content}</p>
+                    <small style="color:#555">By ${post.user} • ${new Date(post.id).toLocaleString()}</small>
+                </div>
+            `;
+        });
+    }
+
+    // 2. Yeni mesajı sunucuya gönder
+    async function submitPost() {
+        const title = document.getElementById('postTitle').value;
+        const content = document.getElementById('postContent').value;
+
+        if(!title || !content) return alert("Lütfen boş bırakmayın!");
+
+        await fetch('/api/posts', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ title, content })
+        });
+
+        closeModal();
+        loadPosts(); // Listeyi yenile
+    }
+
+    function openModal() { document.getElementById('postModal').style.display = 'flex'; }
+    function closeModal() { document.getElementById('postModal').style.display = 'none'; }
+
+    // İlk yükleme
+    loadPosts();
+</script>
+
+</body>
+</html>
