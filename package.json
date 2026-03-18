@@ -1,7 +1,6 @@
 {
   "name": "limetree-forum",
   "version": "1.0.0",
-  "description": "LimeTree Engine Community Forum",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
