@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE VOID CHRONICLES | Official Interface</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+        :root {
+            --neon-blue: #00f2ff;
+            --neon-pink: #ff0055;
+            --terminal-bg: #020508;
+            --glass: rgba(0, 242, 255, 0.05);
+        }
+
+        body {
+            background-color: var(--terminal-bg);
+            color: #fff;
+            font-family: 'Share Tech Mono', monospace;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-image: 
+                linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+                linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 2px, 3px 100%;
+        }
+
+        /* Scanline Efekti */
+        body::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%),
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .interface {
+            width: 90%;
+            max-width: 900px;
+            border: 2px solid var(--neon-blue);
+            padding: 40px;
+            background: var(--glass);
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.2), inset 0 0 20px rgba(0, 242, 255, 0.1);
+            position: relative;
+            backdrop-filter: blur(5px);
+        }
+
+        .header {
+            border-bottom: 1px solid var(--neon-blue);
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            letter-spacing: 5px;
+            color: var(--neon-blue);
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
+
+        .status-bar {
+            font-size: 0.8rem;
+            color: var(--neon-pink);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .box {
+            border: 1px solid rgba(0, 242, 255, 0.3);
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .box h2 {
+            font-size: 1rem;
+            margin-top: 0;
+            color: var(--neon-blue);
+            text-transform: uppercase;
+        }
+
+        .description {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #a0c0c0;
+        }
+
+        /* Download Button - Neon Style */
+        .download-container {
+            text-align: center;
+        }
+
+        .btn {
+            background: transparent;
+            color: var(--neon-blue);
+            border: 2px solid var(--neon-blue);
+            padding: 15px 40px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: 0.3s;
+            text-transform: uppercase;
+            position: relative;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background: var(--neon-blue);
+            color: var(--terminal-bg);
+            box-shadow: 0 0 30px var(--neon-blue);
+        }
+
+        .btn::after {
+            content: ' [STABLE VERSION]';
+            font-size: 0.6rem;
+            display: block;
+        }
+
+        .footer {
+            margin-top: 30px;
+            font-size: 0.7rem;
+            text-align: center;
+            opacity: 0.6;
+            color: var(--neon-blue);
+        }
+
+        .glitch-text {
+            animation: glitch 2s infinite;
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="interface">
+        <div class="header">
+            <div>
+                <p style="margin:0; font-size: 0.7rem; opacity: 0.7;">PROJECT_ID: VOID_V1</p>
+                <h1 class="glitch-text">THE VOID CHRONICLES</h1>
+            </div>
+            <div class="status-bar">
+                STATUS: SYSTEM_READY<br>
+                DATE: 21.03.2024
+            </div>
+        </div>
+
+        <div class="grid">
+            <div class="box">
+                <h2>Technical Data</h2>
+                <ul style="list-style: none; padding: 0; font-size: 0.9rem;">
+                    <li>> NODES: 250</li>
+                    <li>> ENDINGS: 10</li>
+                    <li>> ENGINE: LIMETREE v1.1.0</li>
+                    <li>> DEV: VOID STUDIOS</li>
+                </ul>
+            </div>
+            <div class="box">
+                <h2>Briefing</h2>
+                <p class="description">
+                    Nostromo-7 station is dead. You are the last biological unit. Navigate through the void. Make the choice.
+                </p>
+            </div>
+        </div>
+
+        <div class="download-container">
+            <a href="VoidChronicles_FULL_250_Nodes.zip" class="btn">
+                Initiate Download
+            </a>
+        </div>
+
+        <div class="footer">
+            
+        </div>
+    </div>
+
+</body>
+</html>
