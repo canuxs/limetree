@@ -26,7 +26,7 @@ In our latest release, we have implemented several security measures to protect 
 If you discover a security vulnerability within the LimeTree CLI or Player, please follow these steps:
 
 1.  **Do Not Publicize:** Please avoid creating public GitHub issues for security vulnerabilities.
-2.  **Private Report:** Send a detailed report to `security@limetree.dev` (or your preferred contact).
+2.  **Private Report:** Send a detailed report at the Feedback page.
 3.  **Details to Include:**
     * The version of the CLI you are using.
     * A brief description of the vulnerability.
