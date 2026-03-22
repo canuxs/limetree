@@ -1,5 +1,10 @@
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![NPM Version](https://img.shields.io/npm/v/limetree-engine?color=green)
+![License](https://img.shields.io/badge/License-MIT-yellow.svg)
+
+![Security](https://img.shields.io/badge/Security-Verified-brightgreen.svg)
+![Privacy](https://img.shields.io/badge/Privacy-Encrypted-blue.svg)
+![Status](https://img.shields.io/badge/Build-v1.1.1--Stable-orange.svg)
 
 [View Wiki](https://github.com/canuxs/limetree/wiki)
 
