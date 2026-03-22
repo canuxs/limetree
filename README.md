@@ -1,10 +1,11 @@
-![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
-![NPM Version](https://img.shields.io/npm/v/limetree-engine?color=green)
-![License](https://img.shields.io/badge/License-MIT-yellow.svg)
+![NPM Version](https://img.shields.io/npm/v/limetree-engine?color=red&style=flat)
+![NPM Downloads](https://img.shields.io/npm/dt/limetree-engine?color=orange&style=flat)
+![Build Status](https://img.shields.io/badge/Build-Passed-success.svg?style=flat)
+![Security](https://img.shields.io/badge/Security-Verified-brightgreen.svg?style=flat)
 
-![Security](https://img.shields.io/badge/Security-Verified-brightgreen.svg)
-![Privacy](https://img.shields.io/badge/Privacy-Encrypted-blue.svg)
-![Status](https://img.shields.io/badge/Build-v1.1.1--Stable-orange.svg)
+![Privacy](https://img.shields.io/badge/Privacy-Encrypted-blue.svg?style=flat)
+![License](https://img.shields.io/npm/l/limetree-engine?color=blue&style=flat)
+![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg?style=flat)
 
 [View Wiki](https://github.com/canuxs/limetree/wiki)
 
